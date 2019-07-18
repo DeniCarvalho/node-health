@@ -1,0 +1,12 @@
+INICIALIZAÇÃO
+--> 'npm init -y' para criar package.json padrão
+--> setar script de start
+
+INSTALAÇÃO DE PACOTES
+--> npm i http express debug --save
+--> npm i nodemon --save-dev
+--> npm i body-parser --save
+--> npm i mongoose --save
+
+APLICAÇÃO
+--> Não fixar o número da porta
