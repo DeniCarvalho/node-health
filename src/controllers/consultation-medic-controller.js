@@ -1,6 +1,6 @@
 'use strict'
 const ValidationContract = require('../validators/fluent-validator');
-const repository = require('../repositories/patient-repository');
+const repository = require('../repositories/consultation-medic-repository');
 
 exports.get = async (req, res, next) => {
     try {
@@ -31,13 +31,9 @@ exports.getByName = async (req, res, next) => {
 
 exports.post = async (req, res, next) => {
     let contract = new ValidationContract();
-    contract.hasMaxLen(req.body.name, 100, 'O Nome excedeu o tamanho limite');
-    contract.isRequired(req.body.name, 'O Nome é obrigatório');
 
-    contract.isRequired(req.body.rg, 'O RG é obrigatório');
-    contract.isRequired(req.body.cpf, 'O CPF é obrigatório');
-    contract.isRequired(req.body.sex, 'O campo Sexo é obrigatório');
-    contract.isRequired(req.body.birthDate, 'A Data de Nascimento é obrigatório');
+    contract.isRequired(req.body.medic, 'O Médico é obrigatório');
+    contract.isRequired(req.body.consultations, 'Deve conter pelo menos uma consulta');
 
     if (!contract.isValid()) {
         res.status(400).send(contract.errors()).end();
@@ -46,25 +42,25 @@ exports.post = async (req, res, next) => {
 
     try {
         await repository.create(req.body);
-        res.status(201).send({ message: 'Paciente cadastrado com sucesso!' });
+        res.status(201).send({ message: 'Consulta cadastrada com sucesso!' });
     } catch (e) {
-        res.status(400).send({ message: 'Erro ao cadastra paciente', data: e });
+        res.status(400).send({ message: 'Erro ao cadastrar consulta', data: e });
     }
 }
-exports.put = async(req, res, next) => {
+exports.put = async (req, res, next) => {
     try {
         await repository.update(req.params.id, req.body);
-        res.status(200).send({ message: 'Paciente atualizado com sucesso' });
+        res.status(200).send({ message: 'Consulta atualizada com sucesso' });
     } catch (e) {
-        res.status(400).send({ message: 'Erro ao atualizar paciente', data: e });
+        res.status(400).send({ message: 'Erro ao atualizar consulta', data: e });
     }
 };
 
-exports.delete = async(req, res, next) => {
+exports.delete = async (req, res, next) => {
     try {
         await repository.delete(req.params.id);
-        res.status(200).send({ message: 'Paciente deletado com sucesso' });
+        res.status(200).send({ message: 'Consulta deletada com sucesso' });
     } catch (e) {
-        res.status(400).send({ message: 'Erro ao deletar paciente', data: e });
+        res.status(400).send({ message: 'Erro ao deletar consulta', data: e });
     }
 }

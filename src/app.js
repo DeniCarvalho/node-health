@@ -11,10 +11,14 @@ mongoose.connect('mongodb+srv://denicarvalho:denicarvalho@cluster0-tpzyr.azure.m
 
 // Carrega models
 const Patient = require('./models/patient-model');
+const User = require('./models/user-model');
+const ConsultationMedic = require('./models/consultation-medic-model');
 
 //Carrega rotas
 const indexRoute = require('./routes/index-route');
 const patientRoute = require('./routes/patient-route');
+const userRoute = require('./routes/user-route');
+const consultationMedicRoute = require('./routes/consultation-medic-route');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,5 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', indexRoute);
 app.use('/patient', patientRoute);
+app.use('/user', userRoute);
+app.use('/consultation', consultationMedicRoute);
 
 module.exports = app;
