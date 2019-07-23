@@ -1,6 +1,7 @@
 'use strict'
 const ValidationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/consultation-medic-repository');
+const emailService = require('../services/email-service');
 
 exports.get = async (req, res, next) => {
     try {
@@ -41,8 +42,12 @@ exports.post = async (req, res, next) => {
     }
 
     try {
-        await repository.create(req.body);
-        res.status(201).send({ message: 'Consulta cadastrada com sucesso!' });
+        let dataSave = await repository.create(req.body);
+        let data = await repository.getById(dataSave._id);
+
+        await emailService.send(data.medic.email, 'Nova consulta agendada', global.EMAIL_TMPL.replace('{0}', data.medic.name));
+
+        res.status(201).send({ message: 'Consulta cadastrada com sucesso!', data: data });
     } catch (e) {
         res.status(400).send({ message: 'Erro ao cadastrar consulta', data: e });
     }

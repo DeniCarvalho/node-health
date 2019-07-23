@@ -7,7 +7,7 @@ exports.get = async () => {
 };
 
 exports.getById = async (id) => {
-    return await ConsultationMedic.findById(id)
+    return await ConsultationMedic.findById(id).populate('medic', '_id name email').populate('userCreate', '_id name email role').populate('consultations.patient', '_id name cpf sex');
 }
 
 exports.getByName = async (name) => {
@@ -16,7 +16,7 @@ exports.getByName = async (name) => {
 
 exports.create = async (data) => {
     let consultationMedic = new ConsultationMedic(data);
-    await consultationMedic.save();
+    return await consultationMedic.save();
 }
 
 exports.update = async (id, data) => {

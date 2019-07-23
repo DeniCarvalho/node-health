@@ -1,5 +1,5 @@
 global.SALT_KEY = '883a74c3-012c-4af0-a679-d80b8d154625';
-global.EMAIL_TMPL = '<strong>{0}</strong>';
+global.EMAIL_TMPL = 'Olá Dr(a) <strong>{0}</strong>, novas consultas foram agendadas com você!';
 
 module.exports = {
     connectionString: 'mongodb+srv://denicarvalho:denicarvalho@cluster0-tpzyr.azure.mongodb.net/test?retryWrites=true&w=majority',
